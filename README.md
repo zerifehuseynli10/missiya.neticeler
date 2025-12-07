@@ -1,122 +1,176 @@
 # Вывод изображений и текстовое поле
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nəticə Girişi</title>
-    <style>
-        /* --- Ümumi Stillər --- */
-        body {
-            font-family: Tahoma, sans-serif;
-            background-color: #ffffff;
-            margin: 0;
-            padding: 0;
-            /* Tam ekran için her zaman 100vh kullanıyoruz */
-            height: 100vh;
-            overflow: hidden; /* Scroll çubuklarını önlemek için */
-        }
+<style>
+    /* --- Ümumi Stillər --- */
+    body {
+        font-family: Tahoma, sans-serif;
+        background-color: #ffffff;
+        margin: 0;
+        padding: 0;
+    }
 
-        /* --------------------------------- */
-        /* --- 1. GİRİŞ FORMU SAYFASI --- */
-        /* --------------------------------- */
+    /* --- Giriş Forması Stilləri --- */
+    #input-page {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        text-align: center;
+    }
 
-        #input-page {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            text-align: center;
-            /* Varsayılan olarak gösteriyoruz */
-        }
+    #input-page h1 {
+        font-size: 28px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
 
-        #input-page h1 {
-            font-size: 28px;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
+    #jobNumberInput {
+        padding: 10px 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+        width: 250px;
+        margin-right: 10px;
+    }
 
-        #jobNumberInput {
-            padding: 10px 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 16px;
-            width: 250px;
-            margin-right: 10px;
-        }
+    .blue-button {
+        background-color: #007aff;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
 
-        .blue-button {
-            background-color: #007aff;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
+    .blue-button:hover {
+        background-color: #005bb5;
+    }
 
-        .blue-button:hover {
-            background-color: #005bb5;
-        }
+    /* --- Nəticə Vərəqəsi Stilləri --- */
+    #result-page {
+        display: none; /* Başlanğıcda gizli saxlayırıq */
+        padding: 20px;
+    }
 
-        /* --------------------------------- */
-        /* --- 2. TAM EKRAN RESİM SAYFASI --- */
-        /* --------------------------------- */
+    .page-container {
+        width: 900px;
+        margin: 0 auto;
+        background-color: white;
+        padding: 30px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
 
-        #result-page {
-            /* Başlangıçta gizli tutuyoruz */
-            display: none; 
-            width: 100%;
-            height: 100%;
-        }
-        
-        #tam-ekran-resim {
-            /* Önceki tam ekran kodunuzdan alındı */
-            width: 100%;
-            height: 100%;
-            
-            /* Sizin verdiğiniz link kullanıldı */
-            background-image: url('https://i.ibb.co/4ZkcJZTc/Screenshot-2025-12-07-20-42-55-253-com-miui-gallery.png');
-            
-            /* Tam ekranı kaplama ayarları */
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
+    /* Başlıq və Loqo */
+    .header-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 20px;
+    }
 
-    </style>
-</head>
-<body>
+    .result-title-box {
+        background-color: #f0f0f0;
+        padding: 8px;
+        font-size: 16px;
+        font-weight: bold;
+        text-align: center;
+        border: 1px solid #ccc;
+        width: 50%;
+    }
 
-    <div id="input-page">
-        <div>
-            <h1>İmtahan Nömrəsini Daxil Edin</h1>
-            <input type="text" id="jobNumberInput" placeholder="Nömrəni yazın...">
-            <button class="blue-button" onclick="showResult()">Nəticəni Göstər</button>
-        </div>
-    </div>
+    .logo-box {
+        text-align: center;
+        font-weight: bold;
+        line-height: 1.1;
+    }
 
-    <div id="result-page">
-        <div id="tam-ekran-resim">
-            </div>
-    </div>
+    .logo-box p {
+        margin: 0;
+        font-size: 14px;
+    }
 
-    <script>
-        function showResult() {
-            // Giriş sayfasını gizle
-            document.getElementById('input-page').style.display = 'none';
-            
-            // Sonuç sayfasını (Tam Ekran Resmi) göster
-            document.getElementById('result-page').style.display = 'block';
-            
-            // Not: Eğer farklı numaralar için farklı resimler göstermek isterseniz,
-            // burada 'jobNumberInput' değerini kontrol edip 'tam-ekran-resim' div'inin
-            // background-image özelliğini dinamik olarak değiştirmelisiniz.
-        }
-    </script>
+    /* Şagird Məlumat Cədvəli */
+    .info-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
 
-</body>
-</html>
+    .info-table td {
+        border: 1px solid #000;
+        padding: 5px 10px;
+        font-size: 12px;
+    }
+
+    .info-table .label {
+        background-color: #f0f0f0;
+        font-weight: bold;
+        width: 15%;
+    }
+
+    /* Fənn Hissəsi */
+    .subject-box {
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        padding: 5px;
+    }
+
+    .subject-name {
+        background-color: #f0f0f0;
+        padding: 5px;
+        font-weight: bold;
+        font-size: 14px;
+        margin-bottom: 5px;
+        border-bottom: 1px solid #ccc;
+    }
+
+    /* Bal Cədvəli (Sual/Cavab) */
+    .score-table {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: center;
+        font-size: 10px;
+        margin-bottom: 5px;
+    }
+
+    .score-table td {
+        border: 1px solid #ccc;
+        padding: 3px;
+        white-space: nowrap;
+    }
+
+    .score-table thead td {
+        background-color: #e0e0e0;
+        font-weight: bold;
+    }
+
+    .score-table .correct {
+        color: green;
+        font-weight: bold;
+    }
+
+    .score-table .wrong {
+        color: red;
+        font-weight: bold;
+    }
+
+    /* Fənnin Ümumi Göstəriciləri Cədvəli */
+    .summary-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 12px;
+    }
+
+    .summary-table td {
+        border: 1px solid #000;
+        padding: 5px;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .summary-table .highlight-value {
+        background-color: #f0f0f0;
+    }
+</style>
